@@ -2,19 +2,24 @@
 
 @section('content')
 <div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">Dashboard</div>
-
+    <div class="row">
+        <div class="col-sm-12 col-md-6 col-lg-4">
+            <div class="card card-style">
                 <div class="card-body">
-                    @if (session('status'))
-                        <div class="alert alert-success" role="alert">
-                            {{ session('status') }}
+                    <h5 class="text-center">Item 1</h5>
+                    <hr>
+                    <p>Price: £22</p>
+                    <p>Category: home</p>
+                    <p>Priority: high</p>
+                    <div class="d-flex flex-row justify-content-between">
+                        <div>
+                            <a href="#" target="_blank">Link</a>
                         </div>
-                    @endif
-
-                    You are logged in!
+                        <div>
+                            <button class="btn btn-success btn-sm">Edit</button>
+                            <button class="btn btn-danger btn-sm">Delete</button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
