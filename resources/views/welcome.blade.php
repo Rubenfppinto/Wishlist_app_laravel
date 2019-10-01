@@ -81,7 +81,7 @@
 
             <div class="content">
                 <div class="title m-b-md">
-                    Laravel
+                    My Wishlist
                 </div>
 
                 <div class="links">
