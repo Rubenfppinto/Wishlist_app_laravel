@@ -2,6 +2,18 @@
 
 @section('content')
 <div class="container">
+    <div class="row justify-content-center">
+        <div class="pr-2">
+            <p><strong>Total items: </strong>20</p>
+        </div>
+        <div class="pr-2">
+            <p><strong>Opened items: </strong>20</p>
+        </div>
+        <div class="pr-2">
+            <p><strong>Closed items: </strong>20</p>
+        </div>
+    </div>
+    <hr>
     <div class="row">
         <div class="col-sm-12 col-md-6 col-lg-4">
             <div class="card card-style">
