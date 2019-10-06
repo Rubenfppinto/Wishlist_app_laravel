@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use \App\Product;
+use \App\User;
+use Intervention\Image\Facades\Image;
 
 class ProductsController extends Controller
 {
@@ -31,6 +33,9 @@ class ProductsController extends Controller
 
         $imagePath = request('image')->store('uploads', 'public');
 
+        $image = Image::make(public_path("/storage/{$imagePath}"))->fit(200, 200);
+        $image->save();
+
         //fetches the autheticated user and adds the product through the relationship with User
         auth()->user()->products()->create([
             'name' => $data['name'],
@@ -42,5 +47,26 @@ class ProductsController extends Controller
         ]);
 
         return redirect('/profile/' . auth()->user()->id);
+    }
+
+    public function edit(Product $product)
+    {
+        return view('products.edit', compact('product'));
+    }
+
+    public function update(Product $product)
+    {
+        $data = request()->validate([
+            'name' => 'required',
+            'price' => 'required',
+            'priority' => 'required',
+            'category' => 'required',
+            'url' => ['required', 'url'],
+            'image' => '',
+        ]);
+
+        auth()->user()->products->id->update($data);
+
+        return redirect("/profile/" . auth()->user()->id);
     }
 }

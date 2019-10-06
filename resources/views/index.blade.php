@@ -30,7 +30,7 @@
                                 <a href="{{ $product->url }}" target="_blank">Link</a>
                             </div>
                             <div>
-                                <button class="btn btn-success btn-sm">Edit</button>
+                                <a href="/product/{{ $product->id }}/edit"><button class="btn btn-success btn-sm">Edit</button></a>
                                 <button class="btn btn-danger btn-sm">Delete</button>
                             </div>
                         </div>
