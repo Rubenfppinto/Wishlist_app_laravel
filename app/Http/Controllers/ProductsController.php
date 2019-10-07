@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use \App\Product;
 use \App\User;
+use Illuminate\Support\Facades\Redirect;
 use Intervention\Image\Facades\Image;
 
 class ProductsController extends Controller
@@ -54,8 +55,10 @@ class ProductsController extends Controller
         return view('products.edit', compact('product'));
     }
 
-    public function update(Product $product)
+    public function update(Request $request)
     {
+        // dd($request->priority, $request->category, $request->toArray());
+
         $data = request()->validate([
             'name' => 'required',
             'price' => 'required',
@@ -65,8 +68,39 @@ class ProductsController extends Controller
             'image' => '',
         ]);
 
-        auth()->user()->products->id->update($data);
+        $productId = $request->productId;
+        $user = auth()->user();
 
-        return redirect("/profile/" . auth()->user()->id);
+        $product = new Product();
+        $thisProduct = $product->where([
+            'user_id' => $user->id,
+            'id' => $productId,
+        ])->first();
+
+        if (!$thisProduct)
+        {
+            $errors = ['errors' => 'The product you are trying to edit belongs to other user'];
+            return Redirect::back()->withErrors($errors);
+        }
+
+        $thisProduct->update($data);
+
+        return redirect("/profile/" . $user->id);
+    }
+
+    public function destroy(Request $request)
+    {
+        $productId = $request->productId;
+        $user = auth()->user();
+
+        $product = new Product();
+        $thisProduct = $product->where([
+            'user_id' => $user->id,
+            'id' => $productId,
+        ])->first();
+
+        $thisProduct->delete();
+
+        return back();
     }
 }

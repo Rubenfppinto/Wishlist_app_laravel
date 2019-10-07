@@ -75,6 +75,7 @@ body {
   background-color: #f8fafc;
 }
 
+
 [tabindex="-1"]:focus {
   outline: 0 !important;
 }
@@ -4261,6 +4262,11 @@ input[type=button].btn-block {
   list-style: none;
 }
 
+.navbg-custom {
+    background-color: darkred !important;
+}
+
+
 .nav-link {
   display: block;
   padding: 0.5rem 1rem;
@@ -4697,7 +4703,7 @@ input[type=button].btn-block {
 }
 
 .navbar-dark .navbar-nav .nav-link {
-  color: rgba(255, 255, 255, 0.5);
+  color: rgba(255, 255, 255, 0.9);
 }
 
 .navbar-dark .navbar-nav .nav-link:hover,

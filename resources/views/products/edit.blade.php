@@ -1,8 +1,30 @@
 @extends('layouts.app')
 
+<?php
+    $priorities = [
+        'Low',
+        'Medium',
+        'High',
+        'Highest'
+    ];
+    $categories = [
+        'Home',
+        'Office',
+        'Kitchen',
+        'Other'
+    ];
+?>
+
 @section('content')
     <div class="container">
         <h1 class="text-center">Edit product</h1>
+
+        @if($errors->has('errors'))
+            <div class="alert alert-danger" role="alert">
+                {{ $errors->first('errors') }}
+            </div>
+        @endif
+
         <form action="/product/{{ $product->id }}" method="POST" enctype="multipart/form-data">
             @csrf
             @method('PATCH')
@@ -36,11 +58,17 @@
                     <div class="form-group row">
                         <label for="category" class="col-md-4 col-form-label">Category</label>
 
-                        <select class="form-control" id="category" type="text" class="form-control @error('category') is-invalid @enderror" name="category">
-                            <option disabled selected hidden>{{ $product->category }}</option>
-                            <option>Home</option>
-                            <option>Office</option>
-                        </select>
+                        <select id="category" type="text" class="form-control @error('category') is-invalid @enderror" name="category" value="{{ old('category') ?? $product->category }}">
+                                <option value="">Please select</option>
+                                @foreach ($categories as $category)
+                                    <option
+                                        {{ $category == $product->category ? 'selected' : '' }}
+                                        value="{{ $category }}">
+                                        {{ $category }}
+                                    </option>
+                                @endforeach
+                            </select>
+
                         @error('category')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
@@ -51,12 +79,16 @@
                     <div class="form-group row">
                         <label for="priority" class="col-md-4 col-form-label">Priority</label>
 
-                        <select class="form-control" id="priority" type="text" class="form-control @error('priority') is-invalid @enderror" name="priority">
-                            <option value="" disabled selected hidden>{{ $product->priority }}</option>
-                            <option>Low</option>
-                            <option>Medium</option>
-                            <option>High</option>
-                            <option>Highest</option>
+                        <select id="priority" type="text" class="form-control @error('priority') is-invalid @enderror" name="priority" value="{{ old('priority') ?? $product->priority }}">
+                            <option value="">Please select</option>
+                            @foreach ($priorities as $priority)
+                                <option
+                                    {{ $priority == $product->priority ? 'selected' : '' }}
+                                    value="{{ $priority }}">
+                                    {{ $priority }}
+                                </option>
+                            @endforeach
+
                         </select>
                         @error('priority')
                             <span class="invalid-feedback" role="alert">

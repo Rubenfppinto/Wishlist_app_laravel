@@ -29,9 +29,15 @@
                             <div>
                                 <a href="{{ $product->url }}" target="_blank">Link</a>
                             </div>
-                            <div>
-                                <a href="/product/{{ $product->id }}/edit"><button class="btn btn-success btn-sm">Edit</button></a>
-                                <button class="btn btn-danger btn-sm">Delete</button>
+                            <div class="d-flex">
+                                <a class="pr-1" href="/product/{{ $product->id }}/edit"><button class="btn btn-success btn-sm">Edit</button></a>
+
+                                <form action="/product/{{ $product->id }}" method="POST">
+                                    @method('DELETE')
+                                    @csrf
+
+                                    <button class="btn btn-danger btn-sm">Delete</button>
+                                </form>
                             </div>
                         </div>
                     </div>
