@@ -21,7 +21,8 @@
                     <div class="card-body">
                         <h5 class="text-center">{{ $product->name }}</h5>
                         <hr>
-                        <img src="/storage/{{ $product->image }}" class="card-img-top w-200 h-50">
+                        {{-- <img src="/storage/{{ $product->image }}" class="card-img-top w-200 h-50"> --}}
+                        <img src="{{ $product->image }}" class="card-img-top" style="width: 250px; height: 200px; text-align: center;">
                         <p class="pt-2">Price: £{{ $product->price }}</p>
                         <p>Category: {{ $product->category }}</p>
                         <p>Priority: {{ $product->priority }}</p>

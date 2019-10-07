@@ -29,13 +29,15 @@ class ProductsController extends Controller
             'priority' => 'required',
             'category' => 'required',
             'url' => ['required', 'url'],
-            'image' => ['required','image'],
+            'image' => ['required','url'],
         ]);
 
-        $imagePath = request('image')->store('uploads', 'public');
+        //$imagePath = request('image');
 
-        $image = Image::make(public_path("/storage/{$imagePath}"))->fit(200, 100);
-        $image->save();
+        //dd($imagePath);
+
+        //$image = Image::make($imagePath)->resize(200, 100);
+        //$image->save();
 
         //fetches the autheticated user and adds the product through the relationship with User
         auth()->user()->products()->create([
@@ -44,7 +46,8 @@ class ProductsController extends Controller
             'priority' => $data['priority'],
             'category' => $data['category'],
             'url' => $data['url'],
-            'image' => $imagePath,
+            'image' => $data['image'],
+            //'image' => $image,
         ]);
 
         return redirect('/user/' . auth()->user()->id);
