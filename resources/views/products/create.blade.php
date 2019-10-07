@@ -35,7 +35,7 @@
                     <div class="form-group row">
                         <label for="category" class="col-md-4 col-form-label">Category</label>
 
-                        <select class="form-control" id="category" type="text" class="form-control @error('category') is-invalid @enderror" name="category">
+                        <select class="form-control" id="category" type="text" @error('category') is-invalid @enderror name="category" value="{{ old('category') }}">
                                 <option value="" disabled selected hidden>Choose a category</option>
                                 <option>Home</option>
                                 <option>Office</option>
@@ -50,7 +50,7 @@
                     <div class="form-group row">
                         <label for="priority" class="col-md-4 col-form-label">Priority</label>
 
-                        <select class="form-control" id="priority" type="text" class="form-control @error('priority') is-invalid @enderror" name="priority">
+                        <select class="form-control" id="priority" type="text" @error('priority') is-invalid @enderror name="priority" value="{{ old('priority') }}">
                                 <option value="" disabled selected hidden>Choose a priority</option>
                                 <option>Low</option>
                                 <option>Medium</option>

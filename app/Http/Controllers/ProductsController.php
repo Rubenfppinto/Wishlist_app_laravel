@@ -34,7 +34,7 @@ class ProductsController extends Controller
 
         $imagePath = request('image')->store('uploads', 'public');
 
-        $image = Image::make(public_path("/storage/{$imagePath}"))->fit(200, 200);
+        $image = Image::make(public_path("/storage/{$imagePath}"))->fit(200, 100);
         $image->save();
 
         //fetches the autheticated user and adds the product through the relationship with User
@@ -47,7 +47,7 @@ class ProductsController extends Controller
             'image' => $imagePath,
         ]);
 
-        return redirect('/profile/' . auth()->user()->id);
+        return redirect('/user/' . auth()->user()->id);
     }
 
     public function edit(Product $product)
@@ -85,7 +85,7 @@ class ProductsController extends Controller
 
         $thisProduct->update($data);
 
-        return redirect("/profile/" . $user->id);
+        return redirect("/user/" . $user->id);
     }
 
     public function destroy(Request $request)
