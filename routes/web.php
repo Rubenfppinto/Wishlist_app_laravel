@@ -20,7 +20,7 @@ Auth::routes();
 Route::get('/product/create', 'ProductsController@create');
 Route::post('/product', 'ProductsController@store');
 Route::get('/product/{product}/edit', 'ProductsController@edit')->name('product.edit');
-Route::patch('/product/{productId}', 'ProductsController@update')->name('product.update');
+Route::patch('/product/{product}', 'ProductsController@update')->name('product.update');
 Route::delete('/product/{productId}', 'ProductsController@destroy')->name('product.destroy');
 
 Route::get('/profile/{user}', 'ProfilesController@index')->name('profile.show');

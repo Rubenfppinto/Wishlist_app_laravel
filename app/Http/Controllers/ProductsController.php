@@ -29,7 +29,7 @@ class ProductsController extends Controller
             'priority' => 'required',
             'category' => 'required',
             'url' => ['required', 'url'],
-            'image' => ['required','image'],
+            'image' => ['required', 'image'],
         ]);
 
         $imagePath = request('image')->store('uploads', 'public');
@@ -55,7 +55,9 @@ class ProductsController extends Controller
         return view('products.edit', compact('product'));
     }
 
-    public function update(Request $request)
+    // Note: we can use implicit binding to make our life easier
+    // https://laravel.com/docs/6.x/routing#implicit-binding
+    public function update(Product $product)
     {
         // dd($request->priority, $request->category, $request->toArray());
 
@@ -68,22 +70,23 @@ class ProductsController extends Controller
             'image' => '',
         ]);
 
-        $productId = $request->productId;
+        // $productId = $request->productId;
         $user = auth()->user();
 
-        $product = new Product();
-        $thisProduct = $product->where([
-            'user_id' => $user->id,
-            'id' => $productId,
-        ])->first();
+        // $product = new Product();
+        // $thisProduct = $product->where([
+        //     'user_id' => $user->id,
+        //     'id' => $productId,
+        // ])->first();
 
-        if (!$thisProduct)
-        {
-            $errors = ['errors' => 'The product you are trying to edit belongs to other user'];
-            return Redirect::back()->withErrors($errors);
-        }
+        // Note: no need to check if the product exists,
+        // as laravel will throw a 404 by default now that we use implicit binding
+        // if (!$thisProduct) {
+        //     $errors = ['errors' => 'The product you are trying to edit belongs to other user'];
+        //     return Redirect::back()->withErrors($errors);
+        // }
 
-        $thisProduct->update($data);
+        $product->update($data);
 
         return redirect("/profile/" . $user->id);
     }
