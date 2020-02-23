@@ -53,8 +53,10 @@ class ProductsController extends Controller
         return redirect('/user/' . auth()->user()->id);
     }
 
-    public function edit(Product $product)
+    public function edit(Product $product, User $user)
     {
+        $this->authorize('update', $user->product);
+
         return view('products.edit', compact('product'));
     }
 
