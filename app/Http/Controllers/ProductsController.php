@@ -29,13 +29,15 @@ class ProductsController extends Controller
             'priority' => 'required',
             'category' => 'required',
             'url' => ['required', 'url'],
-            'image' => ['required','image'],
+            'image' => ['required','url'],
         ]);
 
-        $imagePath = request('image')->store('uploads', 'public');
+        //$imagePath = request('image');
 
-        $image = Image::make(public_path("/storage/{$imagePath}"))->fit(200, 200);
-        $image->save();
+        //dd($imagePath);
+
+        //$image = Image::make($imagePath)->resize(200, 100);
+        //$image->save();
 
         //fetches the autheticated user and adds the product through the relationship with User
         auth()->user()->products()->create([
@@ -44,14 +46,18 @@ class ProductsController extends Controller
             'priority' => $data['priority'],
             'category' => $data['category'],
             'url' => $data['url'],
-            'image' => $imagePath,
+            'image' => $data['image'],
+            //'image' => $image,
         ]);
 
-        return redirect('/profile/' . auth()->user()->id);
+        return redirect('/user/' . auth()->user()->id);//->with('variable', 'message to output in the view")
+        //This could be use to pass a message into the view with the redirect
     }
 
-    public function edit(Product $product)
+    public function edit(Product $product, User $user)
     {
+        //$this->authorize('update', $user->product);
+
         return view('products.edit', compact('product'));
     }
 
@@ -85,7 +91,7 @@ class ProductsController extends Controller
 
         $thisProduct->update($data);
 
-        return redirect("/profile/" . $user->id);
+        return redirect("/user/" . $user->id);
     }
 
     public function destroy(Request $request)

@@ -35,7 +35,7 @@
                     <div class="form-group row">
                         <label for="category" class="col-md-4 col-form-label">Category</label>
 
-                        <select class="form-control" id="category" type="text" class="form-control @error('category') is-invalid @enderror" name="category">
+                        <select class="form-control" id="category" type="text" @error('category') is-invalid @enderror name="category" value="{{ old('category') }}">
                                 <option value="" disabled selected hidden>Choose a category</option>
                                 <option>Home</option>
                                 <option>Office</option>
@@ -50,7 +50,7 @@
                     <div class="form-group row">
                         <label for="priority" class="col-md-4 col-form-label">Priority</label>
 
-                        <select class="form-control" id="priority" type="text" class="form-control @error('priority') is-invalid @enderror" name="priority">
+                        <select class="form-control" id="priority" type="text" @error('priority') is-invalid @enderror name="priority" value="{{ old('priority') }}">
                                 <option value="" disabled selected hidden>Choose a priority</option>
                                 <option>Low</option>
                                 <option>Medium</option>
@@ -76,7 +76,19 @@
                         @enderror
                     </div>
 
-                    <div class="row">
+                    <div class="form-group row">
+                        <label for="image" class="col-md-4 col-form-label">Image URL</label>
+
+                        <input id="image" type="text" class="form-control @error('image') is-invalid @enderror" name="image" value="{{ old('image') }}" autocomplete="image" autofocus>
+
+                        @error('image')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
+                    </div>
+
+                    {{-- <div class="row">
                         <label for="image" class="col-md-4 col-form-label">Upload a product image</label>
 
                         <input type="file" class="form-control-file" id="image" name="image">
@@ -86,7 +98,7 @@
                                 <strong>{{ $message }}</strong>
 
                         @enderror
-                    </div>
+                    </div> --}}
 
                     <div class="row pt-3">
                         <input type="submit" value="Add product" class="btn btn-primary">
