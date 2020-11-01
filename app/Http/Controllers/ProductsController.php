@@ -50,12 +50,13 @@ class ProductsController extends Controller
             //'image' => $image,
         ]);
 
-        return redirect('/user/' . auth()->user()->id);
+        return redirect('/user/' . auth()->user()->id);//->with('variable', 'message to output in the view")
+        //This could be use to pass a message into the view with the redirect
     }
 
     public function edit(Product $product, User $user)
     {
-        $this->authorize('update', $user->product);
+        //$this->authorize('update', $user->product);
 
         return view('products.edit', compact('product'));
     }
