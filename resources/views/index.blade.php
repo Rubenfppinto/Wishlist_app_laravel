@@ -25,7 +25,6 @@
                         <div class="text-center">
                             <img src="{{ $product->image }}" class="card-img-top" style="width: 170px; height: 150px;">
                         </div>
-
                         <p class="pt-2">Price: £{{ $product->price }}</p>
                         <p>Category: {{ $product->category }}</p>
                         <p>Priority: {{ $product->priority }}</p>
@@ -33,15 +32,19 @@
                             <div>
                                 <a href="{{ $product->url }}" target="_blank">Link</a>
                             </div>
+
+
                             <div class="d-flex">
-                                <a class="pr-1" href="/product/{{ $product->id }}/edit"><button class="btn btn-success btn-sm">Edit</button></a>
+                                @canany(['update','delete'], $product)
+                                    <a class="pr-1" href="/product/{{ $product->id }}/edit"><button class="btn btn-success btn-sm">Edit</button></a>
 
-                                <form action="/product/{{ $product->id }}" method="POST">
-                                    @method('DELETE')
-                                    @csrf
+                                    <form action="/product/{{ $product->id }}" method="POST">
+                                        @method('DELETE')
+                                        @csrf
 
-                                    <button class="btn btn-danger btn-sm">Delete</button>
-                                </form>
+                                        <button class="btn btn-danger btn-sm">Delete</button>
+                                    </form>
+                                @endcanany
                             </div>
                         </div>
                     </div>
