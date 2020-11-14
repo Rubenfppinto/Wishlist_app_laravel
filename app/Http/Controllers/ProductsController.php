@@ -32,13 +32,6 @@ class ProductsController extends Controller
             'image' => ['required','url'],
         ]);
 
-        //$imagePath = request('image');
-
-        //dd($imagePath);
-
-        //$image = Image::make($imagePath)->resize(200, 100);
-        //$image->save();
-
         //fetches the autheticated user and adds the product through the relationship with User
         auth()->user()->products()->create([
             'name' => $data['name'],
@@ -67,17 +60,17 @@ class ProductsController extends Controller
         return view('products.edit', compact('product', 'categories'));
     }
 
-    public function update(Request $request, $productId)
+    public function update(User $user, Product $product)
     {
-        /** @var User $user */
         $user = auth()->user();
+
         $product = Product::where([
             'user_id' => $user->id,
-            'id' => $productId,
+            'id' => $product->id,
         ])->first();
 
         $this->authorize('update', $product);
-        $data = $request->validate([
+        $data = request()->validate([
             'name' => 'required',
             'price' => 'required',
             'priority' => 'required',
@@ -91,14 +84,14 @@ class ProductsController extends Controller
         return redirect("/user/" . $user->id);
     }
 
-    public function destroy(Request $request, $productId)
+    public function destroy(Product $product)
     {
 
         $user = auth()->user();
 
         $product = Product::where([
             'user_id' => $user->id,
-            'id' => $productId,
+            'id' => $product->id,
         ])->first();
 
         $this->authorize('delete', $product);

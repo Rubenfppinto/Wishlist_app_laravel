@@ -21,7 +21,6 @@
                     <div class="card-body">
                         <h5 class="text-center">{{ $product->name }}</h5>
                         <hr>
-                        {{-- <img src="/storage/{{ $product->image }}" class="card-img-top w-200 h-50"> --}}
                         <div class="text-center">
                             <img src="{{ $product->image }}" class="card-img-top" style="width: 170px; height: 150px;">
                         </div>
