@@ -7,12 +7,6 @@
         'High',
         'Highest'
     ];
-    $categories = [
-        'Home',
-        'Office',
-        'Kitchen',
-        'Other'
-    ];
 ?>
 
 @section('content')

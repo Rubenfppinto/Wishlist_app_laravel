@@ -32,13 +32,6 @@ class ProductsController extends Controller
             'image' => ['required','url'],
         ]);
 
-        //$imagePath = request('image');
-
-        //dd($imagePath);
-
-        //$image = Image::make($imagePath)->resize(200, 100);
-        //$image->save();
-
         //fetches the autheticated user and adds the product through the relationship with User
         auth()->user()->products()->create([
             'name' => $data['name'],
@@ -47,7 +40,6 @@ class ProductsController extends Controller
             'category' => $data['category'],
             'url' => $data['url'],
             'image' => $data['image'],
-            //'image' => $image,
         ]);
 
         return redirect('/user/' . auth()->user()->id);//->with('variable', 'message to output in the view")
@@ -56,15 +48,28 @@ class ProductsController extends Controller
 
     public function edit(Product $product, User $user)
     {
-        //$this->authorize('update', $user->product);
+        $this->authorize('update', $product);
 
-        return view('products.edit', compact('product'));
+        $categories = [
+            'Home',
+            'Office',
+            'Kitchen',
+            'Other'
+        ];
+
+        return view('products.edit', compact('product', 'categories'));
     }
 
-    public function update(Request $request)
+    public function update(User $user, Product $product)
     {
-        // dd($request->priority, $request->category, $request->toArray());
+        $user = auth()->user();
 
+        $product = Product::where([
+            'user_id' => $user->id,
+            'id' => $product->id,
+        ])->first();
+
+        $this->authorize('update', $product);
         $data = request()->validate([
             'name' => 'required',
             'price' => 'required',
@@ -74,38 +79,23 @@ class ProductsController extends Controller
             'image' => '',
         ]);
 
-        $productId = $request->productId;
-        $user = auth()->user();
-
-        $product = new Product();
-        $thisProduct = $product->where([
-            'user_id' => $user->id,
-            'id' => $productId,
-        ])->first();
-
-        if (!$thisProduct)
-        {
-            $errors = ['errors' => 'The product you are trying to edit belongs to other user'];
-            return Redirect::back()->withErrors($errors);
-        }
-
-        $thisProduct->update($data);
+        $product->update($data);
 
         return redirect("/user/" . $user->id);
     }
 
-    public function destroy(Request $request)
+    public function destroy(Product $product)
     {
-        $productId = $request->productId;
+
         $user = auth()->user();
 
-        $product = new Product();
-        $thisProduct = $product->where([
+        $product = Product::where([
             'user_id' => $user->id,
-            'id' => $productId,
+            'id' => $product->id,
         ])->first();
 
-        $thisProduct->delete();
+        $this->authorize('delete', $product);
+        $product->delete();
 
         return back();
     }
