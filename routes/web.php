@@ -18,9 +18,6 @@ Route::get('/', function (App\User $user) {
 Auth::routes();
 
 Route::get('/index', 'ProductsController@index')->name('products.index');
-Route::get('/index/{user:username}', 'ProductsController@index')->name('products.index');
-
-
 Route::get('/product/create', 'ProductsController@create');
 Route::post('/product', 'ProductsController@store');
 Route::get('/product/{product}/edit', 'ProductsController@edit')->name('product.edit');
