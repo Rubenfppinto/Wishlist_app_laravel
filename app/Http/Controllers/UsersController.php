@@ -24,6 +24,6 @@ class UsersController extends Controller
      */
     public function index(User $user)
     {
-        return view('index', compact('user'));
+        //return view('index', compact('user'));
     }
 }

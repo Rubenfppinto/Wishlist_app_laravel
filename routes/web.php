@@ -11,15 +11,15 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::get('/', function (App\User $user) {
+    return view('welcome', compact('user'));
 });
 
 Auth::routes();
 
-//Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/index', 'ProductsController@index')->name('products.index');
+Route::get('/index/{user:username}', 'ProductsController@index')->name('products.index');
 
-Route::get('/user/{user}', 'UsersController@index')->name('user.show');
 
 Route::get('/product/create', 'ProductsController@create');
 Route::post('/product', 'ProductsController@store');

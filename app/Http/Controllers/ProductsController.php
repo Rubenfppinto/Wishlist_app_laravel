@@ -16,6 +16,12 @@ class ProductsController extends Controller
         $this->middleware('auth');
     }
 
+    public function index(User $user)
+    {
+        $products = auth()->user()->products;
+
+        return view('index', compact('products'));
+    }
     public function create()
     {
         return view('products.create');
