@@ -9,3 +9,10 @@ https://mywishlistlaravel.herokuapp.com/
 
 ## **Signup**
 This is a practice project and will allow sign up with a fake email and any password for testing purposes
+
+## **How to get it up and running**
+1. Clone the repository
+2. Run composer install
+3. Run npm install
+4. Add local DB information to the .env file
+5. Run Php artisan migrate
